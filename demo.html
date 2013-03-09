@@ -1,0 +1,433 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Emploi du temps</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" href="css/jqm-docs.css" />
+	<script src="jquery-1.8.2.min.js"></script>
+	<script src="data.js"></script>
+	<script src="webservice.js"></script>
+	<script src="demo.js"></script>
+	<script src="jquery.mobile-1.2.0.min.js"></script>
+</head> 
+<body> 
+
+<!-- page : page-main -->
+<div data-role="page" id="page-main">
+
+	<div data-role="header" data-theme="b">
+		<h1>Emploi du temps (demo)</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		
+		<p class="intro"><strong>Bienvenue.</strong> Cette web application permet de g&eacute;rer les emplois du temps d'un &eacute;tablissement scolaire. (d&eacute;mo)</p>
+		
+		<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+			<li data-role="list-divider">Cat&eacute;gories</li>
+			<li><a href="#page-teachers">Professeurs</a></li>
+			<li><a href="#page-classrooms">Salles de classe</a></li>
+			<li><a href="#page-schoolclasses">Classes</a></li>
+			<li><a href="#page-courses">Mati&egrave;res</a></li>
+		</ul>
+		
+	</div><!-- /content -->
+
+	<!--div data-role="footer">		
+		<div data-role="navbar">
+			<ul>
+				<li><a data-icon="gear" href="#">Profs</a></li>
+				<li><a data-icon="grid" href="#">Salles</a></li>
+				<li><a data-icon="star" href="#">Classes</a></li>
+				<li><a data-icon="check" href="#">Cours</a></li>
+			</ul>
+		</div>
+	</div-->
+
+</div><!-- /page -->
+
+
+<!-- -------------------- -->
+<!-- page : page-teachers -->
+
+<div data-role="page" id="page-teachers">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-main" data-icon="back">Retour</a>
+		<h1>Professeurs</h1>
+		<a href="#page-teacher-edit" data-icon="add" id="btn-add-new-teacher">Ajouter</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-teacher-view">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-teachers" data-icon="back">Retour</a>
+		<h1>Professeur</h1>
+		<a href="#page-teacher-edit" data-icon="gear">Editer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<h2 id="view-teacher-name">Nom : Adam Kinkaid</h2>
+		<h3 id="view-teacher-email">Email : Adam.Kinkaid@myschool.fr</h3>
+		<h3 id="view-teacher-desc">Ceci est une description</h3>
+		<img id="view-teacher-picture" src="pictures/nophoto.png"/>
+		<h3 id="view-teacher-courses">Liste des matieres enseignees</h3>
+		
+		Emploi du temps
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-teacher-edit">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-teacher-view" data-icon="back" data-rel="back">Retour</a>
+		<h1>Edition Professeur</h1>
+		<a href="#popupDialogConfirmDeleteTeacher" data-rel="popup" data-icon="delete" data-position-to="window" data-role="button" data-inline="true" data-transition="pop">Supprimer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<form action="#" method="get">
+		
+			<div data-role="fieldcontain">
+				<label for="picture">Photo:</label>
+				<input type="text" name="picture" id="picture" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain">
+				<label for="name">Nom:</label>
+				<input type="text" name="name" id="name" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain">
+				<label for="name">Email:</label>
+				<input type="email" name="email" id="email" value="" data-mini="true" />
+			</div>
+		
+			<div data-role="fieldcontain">
+				<label for="desc">Description:</label>
+				<input type="text" name="desc" id="desc" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain" id="edit-teacher-courses">
+				<fieldset data-role="controlgroup">
+				   <legend>Mati&egrave;res:</legend>
+				   <input type="checkbox" name="teacher-edit-courses-checkbox-course01" id="teacher-edit-courses-checkbox-course01" class="custom" />
+				   <label for="teacher-edit-courses-checkbox-course01">Maths</label>
+				</fieldset>
+			</div>
+		
+			<div class="ui-body ui-body-b">
+				<fieldset class="ui-grid-a">
+						<div class="ui-block-a"><a href="#" data-rel="back" data-role="button" data-icon="delete" data-theme="d" data-mini="true">Annuler</a></div>
+						<div class="ui-block-b"><button type="submit" data-icon="check" data-theme="a" data-mini="true" id="btn-save-teacher">Enregistrer</button></div>
+				</fieldset>
+			</div>
+			
+		</form>
+		
+	</div><!-- /content -->
+
+	
+	<div data-role="popup" id="popupDialogConfirmDeleteTeacher" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+		<div data-role="header" data-theme="a" class="ui-corner-top">
+			<h1>Supprimer ce professeur?</h1>
+		</div>
+		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+			<h3 class="ui-title">Etes-vous s&ucirc;r de vouloir supprimer le professeur : ?</h3>
+			<p>Cette action ne pourra pas &ecirc;tre annul&eacute;e.</p>
+			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Annuler</a>
+			<a href="#page-teachers" data-role="button" data-inline="true" data-transition="flow" data-theme="b" id="btn-do-delete-teacher">Supprimer</a>
+		</div>
+	</div>
+
+</div><!-- /page -->
+
+
+
+
+<!-- ---------------------- -->
+<!-- page : page-classrooms -->
+
+<div data-role="page" id="page-classrooms">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-main" data-icon="back">Retour</a>
+		<h1>Salles de classe</h1>
+		<a href="#page-classroom-edit" data-icon="add" id="btn-add-new-classroom">Ajouter</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-classroom-view">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-classrooms" data-icon="back">Retour</a>
+		<h1>Salle de classe</h1>
+		<a href="#page-classroom-edit" data-icon="gear">Editer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		Nom: <h2 id="view-classroom-name">-</h2>
+		Batiment: <h3 id="view-classroom-building">-</h3>
+		Etage: <h3 id="view-classroom-floor">-</h3>
+		Matieres possibles<h3 id="view-classroom-courses">-</h3>
+		
+		Emploi du temps
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-classroom-edit">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-classroom-view" data-icon="back" data-rel="back">Retour</a>
+		<h1>Edition salle de classe</h1>
+		<a href="#popupDialogConfirmDeleteClassroom" data-rel="popup" data-icon="delete" data-position-to="window" data-role="button" data-inline="true" data-transition="pop">Supprimer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<form action="#" method="get">
+		
+			<div data-role="fieldcontain">
+				<label for="name">Nom:</label>
+				<input type="text" name="name" id="name" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain">
+				<label for="building">Building:</label>
+				<input type="text" name="building" id="building" value="" data-mini="true" />
+			</div>
+		
+			<div data-role="fieldcontain">
+				<label for="floor">Etage:</label>
+				<input type="text" name="floor" id="floor" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain" id="edit-classroom-courses">
+				<fieldset data-role="controlgroup">
+				   <legend>Mati&egrave;res possibles:</legend>
+				   <input type="checkbox" name="classroom-edit-courses-checkbox-course01" id="classroom-edit-courses-checkbox-course01" class="custom" />
+				   <label for="classroom-edit-courses-checkbox-course01">Maths</label>
+				</fieldset>
+			</div>
+		
+			<div class="ui-body ui-body-b">
+				<fieldset class="ui-grid-a">
+						<div class="ui-block-a"><a href="#" data-rel="back" data-role="button" data-icon="delete" data-theme="d" data-mini="true">Annuler</a></div>
+						<div class="ui-block-b"><button type="submit" data-icon="check" data-theme="a" data-mini="true" id="btn-save-classroom">Enregistrer</button></div>
+				</fieldset>
+			</div>
+			
+		</form>
+		
+	</div><!-- /content -->
+
+	<div data-role="popup" id="popupDialogConfirmDeleteClassroom" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+		<div data-role="header" data-theme="a" class="ui-corner-top">
+			<h1>Supprimer salle de classe?</h1>
+		</div>
+		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+			<h3 class="ui-title">Etes-vous s&ucirc;r de vouloir supprimer la salle de classe : ?</h3>
+			<p>Cette action ne pourra pas &ecirc;tre annul&eacute;e.</p>
+			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Annuler</a>
+			<a href="#page-classrooms" data-role="button" data-inline="true" data-transition="flow" data-theme="b" id="btn-do-delete-classroom">Supprimer</a>
+		</div>
+	</div>
+	
+</div><!-- /page -->
+
+
+
+<!-- ------------------------- -->
+<!-- page : page-schoolclasses -->
+
+<div data-role="page" id="page-schoolclasses">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-main" data-icon="back">Retour</a>
+		<h1>Classes</h1>
+		<a href="#page-schoolclasses-edit" data-icon="add" id="btn-add-new-schoolclass">Ajouter</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-schoolclass-view">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-schoolclasses" data-icon="back">Retour</a>
+		<h1>Classe</h1>
+		<a href="#page-schoolclass-edit" data-icon="gear">Editer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		Nom: <h2 id="view-schoolclass-name">-</h2>
+		Nombre d'&eacute;l&egrave;ves : : <h3 id="view-schoolclass-nbstudents">-</h3>
+		Professeur principal: <h3 id="view-schoolclass-leadteacher">-</h3>
+		
+		Emploi du temps
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-schoolclass-edit">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-schoolclass-view" data-icon="back" data-rel="back">Retour</a>
+		<h1>Edition classe</h1>
+		<a href="#popupDialogConfirmDeleteSchoolclass" data-rel="popup" data-icon="delete" data-position-to="window" data-role="button" data-inline="true" data-transition="pop">Supprimer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<form action="#" method="get">
+		
+			<div data-role="fieldcontain">
+				<label for="name">Nom:</label>
+				<input type="text" name="name" id="name" value="" data-mini="true" />
+			</div>
+			
+			<div data-role="fieldcontain">
+				<label for="nbstudents">Nombre d'&eacute;l&egrave;ves:</label>
+				<input type="number" name="nbstudents" id="nbstudents" value="" data-mini="true" />
+			</div>
+		
+			<div data-role="fieldcontain">
+				<label for="schoolclass-edit-select-leadteacher" class="select">Professeur principal:</label>
+				<select name="schoolclass-edit-select-leadteacher" id="schoolclass-edit-select-leadteacher" data-mini="true">
+				   <option value="teacher01">Monsieur X</option>
+				   <option value="teacher02">Madame Y</option>
+				</select>
+			</div>
+		
+			<div class="ui-body ui-body-b">
+				<fieldset class="ui-grid-a">
+						<div class="ui-block-a"><a href="#" data-rel="back" data-role="button" data-icon="delete" data-theme="d" data-mini="true">Annuler</a></div>
+						<div class="ui-block-b"><button type="submit" data-icon="check" data-theme="a" data-mini="true" id="btn-save-schoolclass">Enregistrer</button></div>
+				</fieldset>
+			</div>
+			
+		</form>
+		
+	</div><!-- /content -->
+
+	<div data-role="popup" id="popupDialogConfirmDeleteSchoolclass" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+		<div data-role="header" data-theme="a" class="ui-corner-top">
+			<h1>Supprimer la classe?</h1>
+		</div>
+		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+			<h3 class="ui-title">Etes-vous s&ucirc;r de vouloir supprimer la classe : ?</h3>
+			<p>Cette action ne pourra pas &ecirc;tre annul&eacute;e.</p>
+			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Annuler</a>
+			<a href="#page-schoolclasses" data-role="button" data-inline="true" data-transition="flow" data-theme="b" id="btn-do-delete-schoolclass">Supprimer</a>
+		</div>
+	</div>
+
+</div><!-- /page -->
+
+
+
+<!-- ------------------- -->
+<!-- page : page-courses -->
+
+<div data-role="page" id="page-courses">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-main" data-icon="back">Retour</a>
+		<h1>Mati&egrave;res</h1>
+		<a href="#page-courses-edit" data-icon="add" id="btn-add-new-course">Ajouter</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="page-course-view">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-courses" data-icon="back">Retour</a>
+		<h1>Classe</h1>
+		<a href="#page-course-edit" data-icon="gear">Editer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		Nom de la mati&egrave;re: <h2 id="view-course-name">Adam Kinkaid</h2>
+		Professeurs: <h3 id="view-course-teachers">Adam.Kinkaid@myschool.fr</h3>
+
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+
+<div data-role="page" id="page-course-edit">
+
+	<div data-role="header" data-theme="b">
+		<a href="#page-course-view" data-icon="back" data-rel="back">Retour</a>
+		<h1>Edition mati&egrave;re</h1>
+		<a href="#popupDialogConfirmDeleteCourse" data-rel="popup" data-icon="delete" data-position-to="window" data-role="button" data-inline="true" data-transition="pop">Supprimer</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<form action="#" method="get">
+		
+			<div data-role="fieldcontain">
+				<label for="name">Nom de la mati&eacute;re:</label>
+				<input type="text" name="name" id="name" value="" data-mini="true" />
+			</div>
+		
+			<div class="ui-body ui-body-b">
+				<fieldset class="ui-grid-a">
+						<div class="ui-block-a"><a href="#" data-rel="back" data-role="button" data-icon="delete" data-theme="d" data-mini="true">Annuler</a></div>
+						<div class="ui-block-b"><button type="submit" data-icon="check" data-theme="a" data-mini="true" id="btn-save-course">Enregistrer</button></div>
+				</fieldset>
+			</div>
+			
+		</form>
+		
+	</div><!-- /content -->
+
+	<div data-role="popup" id="popupDialogConfirmDeleteCourse" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+		<div data-role="header" data-theme="a" class="ui-corner-top">
+			<h1>Supprimer la mati&egrave;re?</h1>
+		</div>
+		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+			<h3 class="ui-title">Etes-vous s&ucirc;r de vouloir supprimer la mati&egrave;re : ?</h3>
+			<p>Cette action ne pourra pas &ecirc;tre annul&eacute;e.</p>
+			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Annuler</a>
+			<a href="#page-courses" data-role="button" data-inline="true" data-transition="flow" data-theme="b" id="btn-do-delete-course">Supprimer</a>
+		</div>
+	</div>
+
+</div><!-- /page -->
+
+
+</body>
+</html>
